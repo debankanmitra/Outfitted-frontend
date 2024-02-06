@@ -1,5 +1,4 @@
 import  { useState } from 'react';
-import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import { BsCart2 } from "react-icons/bs";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { IoIosSearch } from "@react-icons/all-files/io/IoIosSearch";
@@ -38,11 +37,11 @@ const Navbar = () => {
             </span>
           </div>
           <button className="hidden md:flex items-center space-x-2">
-            <BsCart2 />
+            <BsCart2 size={20} />
             <span className="text-gray-700">Cart</span>
           </button>
           <button className="flex items-center space-x-2">
-          <FaRegCircleUser />
+          <FaRegCircleUser size={20} />
             <span className="text-gray-700">Profile</span>
           </button>
           <button onClick={toggleMobileMenu} className="md:hidden">
