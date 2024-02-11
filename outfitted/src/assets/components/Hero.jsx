@@ -26,7 +26,7 @@ const Hero = () => {
               Discover the latest trends and styles.Outfitted offers you the ideal combination of fashion and functionality for men, women and kids.
               </p>
               <div className="flex items-center max-md:justify-center ">
-                <a href="/" className="inline-flex items-center justify-center h-12 px-6 mr-6 font-medium tracking-wide text-black transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none">  Get started    </a>
+                <a href="/shop" className="inline-flex items-center justify-center h-12 px-6 mr-6 font-medium tracking-wide text-black transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none">  Shop    </a>
                 <a href="/" className="w-32 transition duration-300 hover:shadow-lg">
               <img src="https://kitwind.io/assets/kometa/google-play.png" className="object-cover object-top w-full h-auto mx-auto" alt="" />
             </a>
