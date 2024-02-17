@@ -186,3 +186,5 @@ const ReviewSection = () => {
 };
 
 export default ReviewSection;
+
+// https://pagedone.io/blocks/e-commerce/product-review
