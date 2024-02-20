@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { IoBag } from "react-icons/io5";
 import { FaKey } from "react-icons/fa6";
 import { SlLogin } from "react-icons/sl";
@@ -24,14 +25,18 @@ const solutions = [
     href: "#",
     icon: IoBag,
   },
-  // { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
-  // { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
 ];
-//   const callsToAction = [
-//     { name: 'Watch Demo', href: '#', icon: PlayCircleIcon },
-//     { name: 'Contact Sales', href: '#', icon: PhoneIcon },
-//   ]
+
 function Flyout() {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setShowModal(!showModal);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
   return (
     <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-3/4 px-4">
       <div className="w-80 max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
@@ -39,7 +44,7 @@ function Flyout() {
           {solutions.map((item) => (
             <div
               key={item.name}
-              className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50" data-modal-target={item.target}
+              className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50" 
             >
               <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                 <item.icon
@@ -47,7 +52,7 @@ function Flyout() {
                   aria-hidden="true"
                 />
               </div>
-              <div>
+              <div onClick={handleOpenModal}>
                 <a href={item.href} className="font-semibold text-gray-900">
                   {item.name}
                   <span className="absolute inset-0" />
@@ -57,19 +62,8 @@ function Flyout() {
             </div>
           ))}
         </div>
-        <Login id="authentication-modal"/>
-        {/* <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-      {callsToAction.map((item) => (
-        <a
-          key={item.name}
-          href={item.href}
-          className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
-        >
-          <item.icon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-          {item.name}
-        </a>
-      ))}
-    </div> */}
+          {showModal && <Login onClose={handleCloseModal} />}
+        {/* <Login id="authentication-modal"/> */}
       </div>
     </Popover.Panel>
   );

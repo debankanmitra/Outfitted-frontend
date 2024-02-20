@@ -1,28 +1,29 @@
-import { useState } from "react";
+/* eslint-disable react/prop-types */
+// import { useState } from "react";
 
-export const Login = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+export const Login = ({ onClose }) => {
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
+  // const toggleModal = () => {
+  //   setIsModalOpen(!isModalOpen);
+  // };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  // const closeModal = () => {
+  //   setIsModalOpen(false);
+  // };
   return (
     <div className="max-w-2xl mx-auto">
       {/* Modal toggle */}
-      <button
+      {/* <button
         onClick={toggleModal}
         className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
         type="button"
       >
         Toggle modal
-      </button>
+      </button> */}
 
       {/* Main modal */}
-      {isModalOpen && (
+      {/* {isModalOpen && ( */}
         <div className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
           <div className="relative p-4 w-full max-w-md max-h-full">
             {/* Modal content */}
@@ -33,7 +34,7 @@ export const Login = () => {
                   Sign in to our platform
                 </h3>
                 <button
-                  onClick={closeModal}
+                  onClick={onClose}
                   className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
                 >
                   <svg
@@ -131,7 +132,7 @@ export const Login = () => {
             </div>
           </div>
         </div>
-      )}
+      {/* )} */}
     </div>
   );
 };
