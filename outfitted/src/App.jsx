@@ -1,3 +1,4 @@
+import Carts from "./pages/Cart";
 import Home from "./pages/Home";
 import ProductDetails from "./pages/ProductDetails";
 import ProductlistPage from "./pages/ProductlistPage";
@@ -11,9 +12,14 @@ function App() {
         <Route path="/shop" element={<ProductlistPage />} />
         {/* <Route path="/product/:id" element={<ProductDetails />} /> */}
         <Route path="/product/id" element={<ProductDetails />} />
+        <Route path="/cart/id" element={<Carts />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
+
+
+// For the smallest possible production build, we recommend minifying your CSS with a tool like cssnano, and compressing your CSS with Brotli. 
+// If you're using a framework, check the documentation as this is often handled for you in production automatically and you don't even need to configure it.

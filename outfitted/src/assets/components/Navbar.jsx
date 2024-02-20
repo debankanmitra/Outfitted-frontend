@@ -4,17 +4,22 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import { IoIosSearch } from "@react-icons/all-files/io/IoIosSearch";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Popover, Transition } from "@headlessui/react";
+import { useNavigate } from "react-router-dom";
 
 import Image from "../images/outfitted.svg";
 import Flyout from "./Flyout";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const handleClick = () => {
+    navigate("/cart/id");
+  };
   return (
     <header className="bg-white shadow">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
@@ -43,7 +48,7 @@ const Navbar = () => {
               <IoIosSearch />
             </span>
           </div>
-          <button className="hidden md:flex items-center space-x-2">
+          <button className="hidden md:flex items-center space-x-2" onClick={handleClick}>
             <BsCart2 size={20} />
             <span className="text-gray-700">Cart</span>
           </button>

@@ -4,6 +4,7 @@ import { FaKey } from "react-icons/fa6";
 import { SlLogin } from "react-icons/sl";
 import { Popover } from "@headlessui/react";
 import { Login, Register } from "./LoginRegister";
+import Wishlist from "./Wishlist";
 
 const solutions = [
   {
@@ -26,6 +27,7 @@ const solutions = [
     description: "View items in your wishlist",
     href: "#",
     icon: IoBag,
+    modalvalue: 'wishlist',
   },
 ];
 
@@ -68,6 +70,8 @@ function Flyout() {
         </div>
           {showModal == 'login' && <Login onClose={handleCloseModal} />}
           {showModal == 'register' && <Register onClose={handleCloseModal} />}
+          {showModal == 'wishlist' && <Wishlist onClose={handleCloseModal} />}
+
       </div>
     </Popover.Panel>
   );
