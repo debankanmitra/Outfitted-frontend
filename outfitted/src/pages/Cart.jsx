@@ -369,5 +369,5 @@ export const CartSection = () => {
   );
 };
 
-// export default { CartSection, Cart }; // Export the CartSection;
 export default Carts;
+// https://tailgrail.com/tailwind/cart
