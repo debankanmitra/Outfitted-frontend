@@ -3,7 +3,7 @@ import { IoBag } from "react-icons/io5";
 import { FaKey } from "react-icons/fa6";
 import { SlLogin } from "react-icons/sl";
 import { Popover } from "@headlessui/react";
-import { Login } from "./LoginRegister";
+import { Login, Register } from "./LoginRegister";
 
 const solutions = [
   {
@@ -11,6 +11,7 @@ const solutions = [
     description: "Register as a new user or create an account",
     href: "#",
     icon: SlLogin,
+    modalvalue: 'register',
   },
   {
     name: "Login",
@@ -18,6 +19,7 @@ const solutions = [
     href: "#",
     target:"authentication-modal",
     icon: FaKey,
+    modalvalue: 'login',
   },
   {
     name: "Wishlist",
@@ -30,13 +32,15 @@ const solutions = [
 function Flyout() {
   const [showModal, setShowModal] = useState(false);
 
-  const handleOpenModal = () => {
-    setShowModal(!showModal);
+  const handleOpenModal = (val) => {
+    setShowModal(val);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
+  
   return (
     <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-3/4 px-4">
       <div className="w-80 max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
@@ -52,8 +56,8 @@ function Flyout() {
                   aria-hidden="true"
                 />
               </div>
-              <div onClick={handleOpenModal}>
-                <a href={item.href} className="font-semibold text-gray-900">
+              <div >
+                <a href={item.href} onClick={() => handleOpenModal(item.modalvalue)} className="font-semibold text-gray-900">
                   {item.name}
                   <span className="absolute inset-0" />
                 </a>
@@ -62,8 +66,8 @@ function Flyout() {
             </div>
           ))}
         </div>
-          {showModal && <Login onClose={handleCloseModal} />}
-        {/* <Login id="authentication-modal"/> */}
+          {showModal == 'login' && <Login onClose={handleCloseModal} />}
+          {showModal == 'register' && <Register onClose={handleCloseModal} />}
       </div>
     </Popover.Panel>
   );

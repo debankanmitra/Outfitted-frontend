@@ -1,4 +1,3 @@
-import { Login } from "./assets/components/LoginRegister";
 import Home from "./pages/Home";
 import ProductDetails from "./pages/ProductDetails";
 import ProductlistPage from "./pages/ProductlistPage";
