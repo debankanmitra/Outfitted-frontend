@@ -1,4 +1,5 @@
-import Carts from "./pages/Cart";
+import { CartSection } from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 import Home from "./pages/Home";
 import ProductDetails from "./pages/ProductDetails";
 import ProductlistPage from "./pages/ProductlistPage";
@@ -12,7 +13,9 @@ function App() {
         <Route path="/shop" element={<ProductlistPage />} />
         {/* <Route path="/product/:id" element={<ProductDetails />} /> */}
         <Route path="/product/id" element={<ProductDetails />} />
-        <Route path="/cart/id" element={<Carts />} />
+        <Route path="/cart/id" element={<CartSection />} />
+        <Route path="/checkout/id" element={<Checkout />} />
+
       </Routes>
     </BrowserRouter>
   );

@@ -146,3 +146,4 @@ export const CartSection = () => {
 
 export default CartSection;
 // https://tailgrail.com/tailwind/cart
+// https://tailwindcomponents.com/component/shopping-cart-responsive
