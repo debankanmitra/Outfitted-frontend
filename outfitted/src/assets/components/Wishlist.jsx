@@ -33,7 +33,7 @@ export default function Wishlist({onClose}) {
   const [open, setOpen] = useState(true)
   async function handleClick() {
     setOpen(false);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 500));
     onClose();
   }
 
@@ -126,11 +126,11 @@ export default function Wishlist({onClose}) {
                     </div>
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                      <div className="flex justify-between text-base font-medium text-gray-900">
+                      {/* <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Subtotal</p>
                         <p>$262.00</p>
                       </div>
-                      <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                      <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p> */}
                       <div className="mt-6">
                         <a
                           href="/"
