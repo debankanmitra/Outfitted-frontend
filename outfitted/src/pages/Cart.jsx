@@ -90,7 +90,7 @@ export const CartSection = () => {
       image: "https://i.postimg.cc/CLWkvq6f/pexels-markus-spiske-1002638.jpg",
       name: "Nike Air Max 2019",
       description: "36EU - 4US",
-      price: 259.110,
+      price: 259,
     }
   ];
   return (

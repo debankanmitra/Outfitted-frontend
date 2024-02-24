@@ -34,7 +34,7 @@ const products = [
         imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
       },
       {
-        id: 3,
+        id: 5,
         name: 'Focus Paper Refill',
         href: '#',
         price: '$89',
@@ -42,7 +42,7 @@ const products = [
         imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
       },
       {
-        id: 3,
+        id: 6,
         name: 'Focus Paper Refill',
         href: '#',
         price: '$89',

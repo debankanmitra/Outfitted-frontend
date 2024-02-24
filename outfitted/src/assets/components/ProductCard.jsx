@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 ProductCard.propTypes = {
   product: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     href: PropTypes.string.isRequired,
     imageSrc: PropTypes.string.isRequired,
     imageAlt: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
+    price: PropTypes.string.isRequired,
   }).isRequired,
 };
 

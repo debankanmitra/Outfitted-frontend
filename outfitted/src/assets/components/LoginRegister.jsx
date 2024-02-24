@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 
-const Field = ({ label, name , placeholder }) => {
+const Field = ({ label, name, id, placeholder,value, onChange }) => {
   return (
     <div>
     <label
@@ -12,9 +13,11 @@ const Field = ({ label, name , placeholder }) => {
     <input
       type={name}
       name={name}
-      id={name}
+      id={id}
       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
       placeholder={placeholder}
+      value={value}
+      onChange={onChange}
       required
     />
   </div>
@@ -24,7 +27,10 @@ const Field = ({ label, name , placeholder }) => {
 Field.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 const CloseSvg = () => {
@@ -48,6 +54,41 @@ const CloseSvg = () => {
 };
 
 export const Login = ({ onClose }) => {
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+    // acceptTerms: false,
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const registrationEndpoint = 'https://outfitted-backend.vercel.app/login/';
+    console.log(JSON.stringify(formData));
+
+    try {
+      const response = await fetch(registrationEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Error during registration:', error);
+    }
+  };
+
   return (
     <div className="fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
       <div className="relative p-4 w-full max-w-md max-h-full">
@@ -68,9 +109,9 @@ export const Login = ({ onClose }) => {
           </div>
           {/* Modal body */}
           <div className="p-4 md:p-5">
-            <form className="space-y-4" action="#">
-              <Field label="Your email" name="email" placeholder="name@company.com" />
-              <Field label="Your password" name="password" placeholder="••••••••" />
+            <form className="space-y-4" onSubmit={handleSubmit} >
+              <Field label="Your username" name="username" id="username" placeholder="john123" value={formData.username}  onChange={handleInputChange} />
+              <Field label="Your password" name="password" id="password" placeholder="••••••••" value={formData.password}  onChange={handleInputChange} />
               <div className="flex justify-between">
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
@@ -117,6 +158,53 @@ Login.propTypes = {
 };
 
 export const Register = ({ onClose }) => {
+
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirm_password: '',
+    // acceptTerms: false,
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // if (!formData.acceptTerms) {
+    //   console.log('Please accept the terms and conditions.');
+    //   return;
+    // }
+    const registrationEndpoint = 'https://outfitted-backend.vercel.app/register/';
+    console.log(JSON.stringify(formData));
+
+    try {
+      const response = await fetch(registrationEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      console.log(data);
+      // if (data.status === 'success') {
+      //   console.log('Registration successful!');
+      //   onClose();
+      // }else {
+      //   console.log('Registration failed. Please try again.');
+      // }
+    } catch (error) {
+      console.error('Error during registration:', error);
+    }
+  };
   return (
     <div className="fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
       <div className="relative p-4 w-full max-w-md max-h-full">
@@ -137,12 +225,12 @@ export const Register = ({ onClose }) => {
           </div>
           {/* Modal body */}
           <div className="p-4 md:p-5">
-            <form className="space-y-4" action="#">
+            <form id="register" className="space-y-4" onSubmit={handleSubmit}>
 
-              <Field label="Your email" name="email" placeholder="name@company.com" />
-              <Field label="Username" name="email" placeholder="name@company.com" />
-              <Field label="Password" name="password" placeholder="••••••••" />
-              <Field label="Confirm Password" name="password" placeholder="••••••••" />
+              <Field label="Your email" name="email" id="email" placeholder="name@company.com" value={formData.email}  onChange={handleInputChange} />
+              <Field label="Username" name="username" id="username" placeholder="john123" value={formData.username}  onChange={handleInputChange} />
+              <Field label="Password" name="password" id="password" placeholder="••••••••" value={formData.password}  onChange={handleInputChange} />
+              <Field label="Confirm Password" name="confirm_password" id="confirm_password" placeholder="••••••••" value={formData.confirm_password}  onChange={handleInputChange} />
               
               <div className="flex items-start">
                 <div className="flex items-start">
