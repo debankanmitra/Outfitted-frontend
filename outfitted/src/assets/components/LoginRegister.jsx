@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import { Fragment, useState } from 'react'
 import { Transition, Dialog } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import Toast from './Toast'
 
 export const Field = ({ label, name, id, placeholder, value, onChange }) => {
   return (
@@ -223,6 +224,7 @@ Login.propTypes = {
 }
 
 export const Register = ({ onClose }) => {
+  const [showToast, setShowToast] = useState('')
   const [open, setOpen] = useState(true)
   async function handleClick() {
     setOpen(false)
@@ -248,7 +250,7 @@ export const Register = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (formData.password !== formData.confirm_password) {
-      console.log('Passwords do not match.')
+      setShowToast('Passwords do not match.')
     }
     const registrationEndpoint =
       'https://outfitted-backend.vercel.app/register/'
@@ -263,7 +265,7 @@ export const Register = ({ onClose }) => {
       })
       const data = await response.json()
       if (response.ok) {
-        console.log(data.message)
+        setShowToast(data.message)
         setFormData({
           username: '',
           email: '',
@@ -272,10 +274,10 @@ export const Register = ({ onClose }) => {
         })
         // onClose()
       } else {
-        console.log(data.message)
+        setShowToast(data.message)
       }
     } catch (error) {
-      console.error('Error during registration:', error)
+      setShowToast(error)
     }
   }
   return (
@@ -367,31 +369,10 @@ export const Register = ({ onClose }) => {
                       </div>
                     </div>
 
-                    {/* <div className="mx-8 mb-8 flex items-start">
-                      <div className="flex items-start">
-                        <div className="flex items-center h-5">
-                          <input
-                            id="remember"
-                            type="checkbox"
-                            value=""
-                            className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 "
-                            required
-                          />
-                        </div>
-                        <label
-                          htmlFor="remember"
-                          className="ms-2 text-sm font-medium text-gray-900 "
-                        >
-                          I accept the&nbsp;
-                        </label>
-                      </div>
-                      <a
-                        href="/"
-                        className="text-sm text-blue-700 hover:underline "
-                      >
-                        Terms and Conditions
-                      </a>
-                    </div> */}
+                    <div className="mx-auto w-72">
+                      {showToast !='' && <Toast message={showToast} />} TODO: Add toast for login
+                    </div>
+                    {/* <Toast message='Account created' /> */}
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <div className="mt-6">
