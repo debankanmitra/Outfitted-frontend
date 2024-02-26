@@ -1,12 +1,29 @@
 import { useState } from "react";
 import { IoBag } from "react-icons/io5";
 import { FaKey } from "react-icons/fa6";
-import { SlLogin } from "react-icons/sl";
+import { SlLogin, SlUser, SlLogout } from "react-icons/sl";
 import { Popover } from "@headlessui/react";
 import { Login, Register } from "./LoginRegister";
 import Wishlist from "./Wishlist";
+import Cookies from 'js-cookie';
 
-const solutions = [
+const authenticated = [
+  {
+    name: "Account",
+    description: "Edit or save your account details",
+    href: "#",
+    icon: SlUser,
+    modalvalue: 'account',
+  },
+  {
+    name: "Logout",
+    description: "Logout from your existing account",
+    href: "#",
+    icon: SlLogout,
+    modalvalue: 'logout',
+  }
+]
+const notauthenticated = [
   {
     name: "Register",
     description: "Register as a new user or create an account",
@@ -32,6 +49,8 @@ const solutions = [
 ];
 
 function Flyout() {
+  const token = Cookies.get('token');
+
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = (val) => {
@@ -39,15 +58,16 @@ function Flyout() {
   };
 
   const handleCloseModal = () => {
+    console.log(Cookies.get('token'))
     setShowModal(false);
   };
 
-  
+  const collection= token ? authenticated : notauthenticated
   return (
     <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-3/4 px-4">
       <div className="w-80 max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
         <div className="p-4">
-          {solutions.map((item) => (
+          {collection.map((item) => (
             <div
               key={item.name}
               className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50" 

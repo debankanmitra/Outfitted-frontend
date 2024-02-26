@@ -3,6 +3,7 @@ import { Fragment, useState } from 'react'
 import { Transition, Dialog } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import Toast from './Toast'
+import Cookies from 'js-cookie'
 
 export const Field = ({ label, name, id, placeholder, value, onChange }) => {
   return (
@@ -70,8 +71,14 @@ export const Login = ({ onClose }) => {
         body: JSON.stringify(formData),
       })
       const data = await response.json()
-      if (data.status === 'success') {
-        console.log('Login successful!', data.status, data.message)
+      const token = data.token // Assuming the token is in the response
+      Cookies.set('token', token, {
+        expires: 7, // Expires in 7 days
+        secure: true, // Only send over HTTPS
+        path: '/', // Accessible from all paths in the app
+      })
+      if (response.ok) {
+        console.log('Login successful!', response.status, data.message)
         setFormData({
           username: '',
           password: '',
@@ -370,9 +377,9 @@ export const Register = ({ onClose }) => {
                     </div>
 
                     <div className="mx-auto w-72">
-                      {showToast !='' && <Toast message={showToast} />} TODO: Add toast for login
+                      {showToast != '' && <Toast message={showToast} />}
+                      {/* TODO: Add toast for login */}
                     </div>
-                    {/* <Toast message='Account created' /> */}
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <div className="mt-6">
