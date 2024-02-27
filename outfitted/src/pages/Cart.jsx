@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 
 const Product = ({image, name, description, price}) => {
@@ -35,6 +36,7 @@ Product.propTypes = {
 };
 
 export const CartSection = () => {
+  const navigate = useNavigate();
   const products = [
     {
       id: 1,
@@ -134,7 +136,7 @@ export const CartSection = () => {
               <img src="https://i.postimg.cc/HL57j0V3/38605-paypal-straight-icon.png" alt="" className="object-cover h-16 mr-2 w-26" />
             </a>
           </div>
-          <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</button>
+          <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600" onClick={() => navigate("/checkout/id")}>Check out</button>
         </div>
       </div>
     </div>
