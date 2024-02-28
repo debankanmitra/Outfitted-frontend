@@ -3,7 +3,7 @@ import { IoBag } from "react-icons/io5";
 import { FaKey } from "react-icons/fa6";
 import { SlLogin, SlUser, SlLogout } from "react-icons/sl";
 import { Popover } from "@headlessui/react";
-import { Login, Register } from "./LoginRegister";
+import { Account, Login, Register } from "./LoginRegister";
 import Wishlist from "./Wishlist";
 import Cookies from 'js-cookie';
 
@@ -14,6 +14,13 @@ const authenticated = [
     href: "#",
     icon: SlUser,
     modalvalue: 'account',
+  },
+  {
+    name: "Wishlist",
+    description: "View items in your wishlist",
+    href: "#",
+    icon: IoBag,
+    modalvalue: 'wishlist',
   },
   {
     name: "Logout",
@@ -91,6 +98,7 @@ function Flyout() {
           {showModal == 'login' && <Login onClose={handleCloseModal} />}
           {showModal == 'register' && <Register onClose={handleCloseModal} />}
           {showModal == 'wishlist' && <Wishlist onClose={handleCloseModal} />}
+          {showModal == 'account' && <Account onClose={handleCloseModal} />}
 
       </div>
     </Popover.Panel>

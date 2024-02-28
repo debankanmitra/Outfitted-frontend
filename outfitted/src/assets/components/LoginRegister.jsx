@@ -6,6 +6,7 @@ import Toast from './Toast'
 import Cookies from 'js-cookie'
 
 export const Field = ({ label, name, id, placeholder, value, onChange }) => {
+
   return (
     <div>
       <label
@@ -22,7 +23,8 @@ export const Field = ({ label, name, id, placeholder, value, onChange }) => {
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        required
+        required={!(name === 'email' || name === 'address' || name === 'name')}
+        disabled={name ==='email'}
       />
     </div>
   )
@@ -259,6 +261,8 @@ export const Register = ({ onClose }) => {
     if (formData.password !== formData.confirm_password) {
       setShowToast('Passwords do not match.')
     }
+    console.log('formdata',formData)
+    console.log(JSON.stringify(formData))
     const registrationEndpoint =
       'https://outfitted-backend.vercel.app/register/'
 
@@ -273,6 +277,8 @@ export const Register = ({ onClose }) => {
       const data = await response.json()
       if (response.ok) {
         setShowToast(data.message)
+        localStorage.setItem('username', JSON.stringify(formData.username))
+        localStorage.setItem('email', JSON.stringify(formData.email))
         setFormData({
           username: '',
           email: '',
@@ -420,3 +426,172 @@ Register.propTypes = {
 }
 //https://tailwindcomponents.com/component/tailwind-css-loginregister-modal
 // https://flowbite.com/docs/components/modal/
+
+export const Account = ({ onClose }) => {
+  const [open, setOpen] = useState(true)
+  async function handleClick() {
+    setOpen(false)
+    await new Promise((resolve) => setTimeout(resolve, 500))
+    onClose()
+  }
+
+  const [formData, setFormData] = useState({
+    name: localStorage.getItem('name') || '',
+    address: localStorage.getItem('address') || '',
+  })
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const registrationEndpoint = 'https://outfitted-backend.vercel.app/users/PatchUserDetail/'
+    const tokenn = Cookies.get('token');
+
+    // The purpose of this code snippet is to create an object that contains only the fields that have been modified by the user in the form. This is crucial for the PATCH request
+    // Object.entries(formData) transforms the formData object into an array of key-value pairs
+    // .filter(([key, value]) => value !== localStorage.getItem(key)) filters the key-value pairs, keeping only those where the value in formData is different from the corresponding value stored in localStorage. This isolates the fields that have been edited.
+    const editedData = Object.fromEntries(
+      Object.entries(formData).filter(([key, value]) => value !== localStorage.getItem(key))
+    );
+
+    try {
+      const response = await fetch(registrationEndpoint, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `token ${tokenn}`,
+        },
+        body: JSON.stringify(editedData),
+      })
+      const data = await response.json()
+      console.log("formdata",editedData)
+      if (response.ok) {
+        if (editedData.name) {
+          localStorage.setItem('name', editedData.name)
+        }
+        if (editedData.address) {
+          localStorage.setItem('address', editedData.address)
+        }
+        // onClose()
+      }
+    } catch (error) {
+      console.error('Error during saving:', error)
+    }
+  }
+  return (
+    <Transition.Root show={open} as={Fragment}>
+      <Dialog as="div" className="relative z-10" onClose={handleClick}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-in-out duration-500"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in-out duration-500"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </Transition.Child>
+
+        <div className="fixed inset-0 overflow-hidden">
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+              <Transition.Child
+                as={Fragment}
+                enter="transform transition ease-in-out duration-500 sm:duration-700"
+                enterFrom="translate-x-full"
+                enterTo="translate-x-0"
+                leave="transform transition ease-in-out duration-500 sm:duration-700"
+                leaveFrom="translate-x-0"
+                leaveTo="translate-x-full"
+              >
+                <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
+                  <form
+                    className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl"
+                    onSubmit={handleSubmit}
+                  >
+                    <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+                      <div className="flex items-start justify-between">
+                        <Dialog.Title className="text-xl font-semibold text-gray-900">
+                          {' '}
+                          Account Details{' '}
+                        </Dialog.Title>
+                        <div className="ml-3 flex h-7 items-center">
+                          <button
+                            type="button"
+                            className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
+                            onClick={handleClick}
+                          >
+                            <span className="absolute -inset-0.5" />
+                            <span className="sr-only">Close panel</span>
+                            <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="mt-8">
+                        <div className="flow-root space-y-4">
+                          <div className="inline-flex items-center space-x-4">
+                            <img
+                              className="w-10 h-10 object-cover rounded-full"
+                              alt="User avatar"
+                              src="https://avatars3.githubusercontent.com/u/72724639?s=400&u=964a4803693899ad66a9229db55953a3dbaad5c6&v=4"
+                            />
+
+                            <h1 className="text-gray-600">{localStorage.getItem('username')}</h1>
+                          </div>
+                          <Field
+                            label="Name"
+                            name="name"
+                            id="name"
+                            placeholder="John Doe"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                          />
+                          <Field
+                            label="Email"
+                            name="email"
+                            id="email"
+                            placeholder="john@me.com"
+                            value={localStorage.getItem('email')}
+                            onChange={handleInputChange}
+                          />
+                          <Field
+                            label="Address"
+                            name="address"
+                            id="address"
+                            type="address"
+                            placeholder="123 Main St New York, NY 10001"
+                            value={formData.address}
+                            onChange={handleInputChange}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+                      <div className="mt-6">
+                        <button
+                          type="submit"
+                          className="w-full flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                        >
+                          {' '}
+                          Save Account Information{' '}
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </div>
+      </Dialog>
+    </Transition.Root>
+  )
+}
+Account.propTypes = {
+  onClose: PropTypes.func.isRequired,
+}
