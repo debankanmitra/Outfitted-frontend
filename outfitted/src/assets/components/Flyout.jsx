@@ -86,7 +86,7 @@ function Flyout() {
                 />
               </div>
               <div >
-                <a href={item.href} onClick={() => handleOpenModal(item.modalvalue)} className="font-semibold text-gray-900">
+                <a href={item.href} onClick={() => item.modalvalue==='logout'? Cookies.remove('token'):handleOpenModal(item.modalvalue)} className="font-semibold text-gray-900">
                   {item.name}
                   <span className="absolute inset-0" />
                 </a>

@@ -12,12 +12,14 @@
   }
   ```
 */
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import ProductCard from './ProductCard'
 import Pagination from './Pagination'
+import axios from 'axios';
+
 
 // product list 
 const products = [
@@ -227,6 +229,25 @@ function classNames(...classes) {
 
 function CategoryFilter() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+
+  const [data, setData] = useState([]); // State to store fetched data
+  // const [isLoading, setIsLoading] = useState(false); // State to indicate loading state
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // setIsLoading(true); // Set loading state to true
+      try {
+        const response = await axios.get('https://outfitted-backend.vercel.app/products/'); // Replace with your API endpoint
+        setData(response.data); // Set data state with response data
+      } catch (error) {
+        console.error(error); // Handle errors
+      } //finally {
+      //  setIsLoading(false); // Set loading state to false
+      //}
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures fetching data only once on component mount
 
   return (
     <div className="bg-white">
@@ -459,8 +480,8 @@ function CategoryFilter() {
               <div className=" lg:col-span-3 place-items-center">      
                 {/* Your content */}
                 <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                    {products.map((product) => (
-                        <ProductCard key={product.id} product={product}/>
+                    {data.map((product) => (
+                        <ProductCard key={product.productid} product={product}/>
                     ))}
                 </div>
                 {/* Your content end */}

@@ -24,7 +24,7 @@ export const Field = ({ label, name, id, placeholder, value, onChange }) => {
         value={value}
         onChange={onChange}
         required={!(name === 'email' || name === 'address' || name === 'name')}
-        disabled={name ==='email'}
+        disabled={name ==='email' && localStorage.getItem('email')!==null}
       />
     </div>
   )

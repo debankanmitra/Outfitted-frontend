@@ -1,14 +1,32 @@
+import { useState , useEffect} from "react";
+import { useParams } from 'react-router-dom'; // Import useParams for dynamic routing
 import ReviewSection from "../assets/components/Reviews";
 
 const ProductDetails = () => {
+  const [product, setProduct] = useState(null);
+  const { productId } = useParams(); // Extract product ID from URL
+
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        const response = await fetch(`/api/products/${productId}`); // Replace with your API endpoint
+        const data = await response.json();
+        setProduct(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProductDetails();
+  }, [productId]); // Re-fetch data when productId changes
   return (
     <section className="py-10 font-poppins">
       <div className="max-w-6xl px-4 mx-auto">
-        <div className="flex flex-wrap mb-24 -mx-4">
-          <div className="w-full px-4 mb-8 md:w-1/2 md:mb-0">
-            <div className="sticky top-0 overflow-hidden ">
-              <div className="relative mb-6 lg:mb-10 lg:h-96">
-                <a
+        {product && (<div className="flex flex-wrap mb-24 -mx-4 border-4 border-pink-500">
+          <div className="w-full px-4 mb-8 md:w-1/2 md:mb-0 border-4 border-pink-500">
+            <div className="sticky top-0 overflow-hidden border-4 border-green-500">
+              <div className="relative mb-6 lg:mb-10 border-4 border-red-500">
+                {/* <a
                   className="absolute left-0 transform lg:ml-2 top-1/2 translate-1/2"
                   href="/"
                 >
@@ -25,13 +43,13 @@ const ProductDetails = () => {
                       d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
                     ></path>
                   </svg>
-                </a>
+                </a> */}
                 <img
-                  className="object-contain w-full lg:h-full"
-                  src="https://i.postimg.cc/0jwyVgqz/Microprocessor1-removebg-preview.png"
+                  className="object-contain w-full lg:h-full border-4 border-sky-500"
+                  src="https://res.cloudinary.com/dzxhegeed/image/upload/v1709181506/womens/tenm8bkxpz2tzbx3zqo8.jpg"
                   alt=""
                 />
-                <a
+                {/* <a
                   className="absolute right-0 transform lg:mr-2 top-1/2 translate-1/2"
                   href="/"
                 >
@@ -48,10 +66,10 @@ const ProductDetails = () => {
                       d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
                     ></path>
                   </svg>
-                </a>
+                </a> */}
               </div>
-              <div className="flex-wrap hidden -mx-2 md:flex">
-                <div className="w-1/2 p-2 sm:w-1/4">
+              {/* <div className="flex-wrap hidden -mx-2 md:flex"> */}
+                {/* <div className="w-1/2 p-2 sm:w-1/4">
                   <a
                     className="block border border-gray-200 hover:border-blue-400"
                     href="/"
@@ -62,8 +80,8 @@ const ProductDetails = () => {
                       alt=""
                     />
                   </a>
-                </div>
-                <div className="w-1/2 p-2 sm:w-1/4">
+                </div> */}
+                {/* <div className="w-1/2 p-2 sm:w-1/4">
                   <a
                     className="block border border-gray-200 hover:border-blue-400"
                     href="/"
@@ -74,8 +92,8 @@ const ProductDetails = () => {
                       alt=""
                     />
                   </a>
-                </div>
-                <div className="w-1/2 p-2 sm:w-1/4">
+                </div> */}
+                {/* <div className="w-1/2 p-2 sm:w-1/4">
                   <a
                     className="block border border-gray-200 hover:border-blue-400"
                     href="/"
@@ -86,8 +104,8 @@ const ProductDetails = () => {
                       alt=""
                     />
                   </a>
-                </div>
-                <div className="w-1/2 p-2 sm:w-1/4">
+                </div> */}
+                {/* <div className="w-1/2 p-2 sm:w-1/4">
                   <a
                     className="block border border-gray-200 hover:border-blue-400"
                     href="/"
@@ -98,8 +116,8 @@ const ProductDetails = () => {
                       alt=""
                     />
                   </a>
-                </div>
-              </div>
+                </div> */}
+              {/* </div> */}
             </div>
           </div>
           <div className="w-full px-4 md:w-1/2">
@@ -256,7 +274,7 @@ const ProductDetails = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>)}
       </div>
       <ReviewSection/>
     </section>

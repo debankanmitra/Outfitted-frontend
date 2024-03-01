@@ -2,51 +2,51 @@ import ProductCard from "./ProductCard";
 
 const products = [
     {
-        id: 1,
+        productid: 1,
         name: 'Earthen Bottle',
         href: '#',
         price: '$48',
-        imageSrc: 'https://websitedemos.net/t-shirts-store-04/wp-content/uploads/sites/1115/2022/07/hero.png',
+        Images: 'kids/t7ehtldjzce1cmsttj8c',
         imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
       },
       {
-        id: 2,
+        productid: 2,
         name: 'Nomad Tumbler',
         href: '#',
         price: '$35',
-        imageSrc: 'https://websitedemos.net/t-shirts-store-04/wp-content/uploads/sites/1115/2022/07/product-05-a.jpg',
+        Images: 'kids/piqlhxfimzyzeihacxca',
         imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
       },
       {
-        id: 3,
+        productid: 3,
         name: 'Focus Paper Refill',
         href: '#',
         price: '$89',
-        imageSrc: 'https://websitedemos.net/t-shirts-store-04/wp-content/uploads/sites/1115/2022/07/product-09-a.jpg',
+        Images: 'mens/oerutusp6nysynkbqa1h',
         imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
       },
       {
-        id: 4,
+        productid: 4,
         name: 'Machined Mechanical Pencil',
         href: '#',
         price: '$35',
-        imageSrc: 'https://websitedemos.net/t-shirts-store-04/wp-content/uploads/sites/1115/2022/07/product-06-a.jpg',
+        Images: 'mens/zkhdyzo918wh6kfh9a8m',
         imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
       },
       {
-        id: 5,
+        productid: 5,
         name: 'Focus Paper Refill',
         href: '#',
         price: '$89',
-        imageSrc: 'https://websitedemos.net/t-shirts-store-04/wp-content/uploads/sites/1115/2022/07/product-02-a.jpg',
+        Images: 'womens/tenm8bkxpz2tzbx3zqo8',
         imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
       },
       {
-        id: 6,
+        productid: 6,
         name: 'Focus Paper Refill',
         href: '#',
         price: '$89',
-        imageSrc: 'https://websitedemos.net/t-shirts-store-04/wp-content/uploads/sites/1115/2022/07/product-01-a.jpg',
+        Images: 'womens/kdl8qprcmdsrjzuudpd8',
         imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
       }
 ]
@@ -58,10 +58,10 @@ function Featured() {
 
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {products.map((product) => (
-            // <a key={product.id} href={product.href} className="group">
+            // <a key={product.productid} href={product.href} className="group">
             //     <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
             //     <img
-            //     src={product.imageSrc}
+            //     src={product.Images}
             //     alt={product.imageAlt}
             //     className="h-full w-full object-cover object-center group-hover:opacity-75"
             //     />
@@ -69,7 +69,7 @@ function Featured() {
             //     <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
             //     <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
             // </a>
-            <ProductCard key={product.id} product={product}/>
+            <ProductCard key={product.productid} product={product}/>
             ))}
         </div>
     </div>

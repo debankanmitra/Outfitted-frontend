@@ -2,6 +2,7 @@ import { CartSection } from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Home from "./pages/Home";
 import ProductDetails from "./pages/ProductDetails";
+import ProductForm from "./pages/ProductForm";
 import ProductlistPage from "./pages/ProductlistPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -11,10 +12,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<ProductlistPage />} />
-        {/* <Route path="/product/:id" element={<ProductDetails />} /> */}
-        <Route path="/product/id" element={<ProductDetails />} />
+        <Route path="/products/:id" element={<ProductDetails />} />
+        {/* <Route path="/product/id" element={<ProductDetails />} /> */}
         <Route path="/cart/id" element={<CartSection />} />
         <Route path="/checkout/id" element={<Checkout />} />
+        <Route path="/upload/product" element={<ProductForm />} /> 
 
       </Routes>
     </BrowserRouter>
