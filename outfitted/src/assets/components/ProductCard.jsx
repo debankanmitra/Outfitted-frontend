@@ -13,14 +13,6 @@ ProductCard.propTypes = {
 }
 
 function ProductCard({ product }) {
-  // const navigate = useNavigate();
-
-  // const handleCardClick = () => {
-  //   console.log(product.productid);
-  //   // navigate(`/product/${product.id}`);
-  //   navigate(`/product/id`);
-  // };
-
   return (
     <div key={product.productid} className="group">
       <Link to={`/products/${product.productid}`}>
@@ -33,7 +25,7 @@ function ProductCard({ product }) {
         </div>
         <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
         <p className="mt-1 text-lg font-medium text-gray-900">
-          {product.price}
+          ${product.price}
         </p>
       </Link>
     </div>
