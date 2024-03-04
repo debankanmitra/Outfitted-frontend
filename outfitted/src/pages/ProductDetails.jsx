@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom' // Import useParams for dynamic routing
 import ReviewSection from '../assets/components/Reviews'
 
 const ProductDetails = () => {
+  const [showReviews, setReviews] = useState(false)
   const [product, setProduct] = useState(null)
   const { productId } = useParams() // Extract product ID from URL
 
@@ -22,6 +23,16 @@ const ProductDetails = () => {
 
     fetchProductDetails()
   }, [productId]) // Re-fetch data when productId changes
+
+  const containerRef = useRef(null);
+  const scrollToBottom = () => {
+    setReviews(true); // Fetch the data , implement fetching from server
+  };
+  
+  useEffect(() => {
+    // Scroll to the bottom only when reviews are loaded
+      containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }, [showReviews]); // Run the effect when reviews change
   return (
     <section className="py-10 font-poppins">
       <div className="max-w-6xl px-4 mx-auto">
@@ -157,6 +168,7 @@ const ProductDetails = () => {
                     >
                       {product.buys} Ratings
                     </a>
+                    <span className="text-md mx-4 font-semibold text-purple-900 hover:underline" onClick={scrollToBottom}>See all Reviews</span>
                   </div>
 
                   <p className="inline-block text-2xl font-semibold text-gray-70 ">
@@ -293,7 +305,9 @@ const ProductDetails = () => {
           <p>Loading product details...</p>
         )}
       </div>
-      <ReviewSection />
+      <div ref={containerRef}>
+      {showReviews && <ReviewSection />}
+      </div>
     </section>
   )
 }
