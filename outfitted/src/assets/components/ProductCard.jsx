@@ -6,9 +6,9 @@ ProductCard.propTypes = {
     productid: PropTypes.string.isRequired,
     // href: PropTypes.string.isRequired,
     Images: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
+    // title: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    price: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
   }).isRequired,
 }
 
@@ -19,7 +19,7 @@ function ProductCard({ product }) {
         <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
           <img
             src={`https://res.cloudinary.com/dzxhegeed/image/upload/w_473,h_593/q_30,f_auto/v1709181506/${product.Images}.jpg`}
-            alt={product.title}
+            alt="{product.title}"
             className="h-full w-full object-cover object-center group-hover:opacity-75"
           />
         </div>

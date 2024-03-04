@@ -19,9 +19,9 @@ const sortOptions = [
   { name: 'Price: High to Low', href: '#', current: false },
 ]
 const subCategories = [
-  { name: 'Women', label: 'Women', checked: false },
-  { name: 'Men', label: 'Men', checked: false },
-  { name: 'Kids', label: 'Kids', checked: false },
+  { id: 'category', name: 'Women', label: 'Women', checked: false },
+  { id: 'category', name: 'Men', label: 'Men', checked: false },
+  { id: 'category', name: 'Kids', label: 'Kids', checked: false },
 ]
 const filters = [
   {
@@ -89,10 +89,41 @@ function classNames(...classes) {
 function CategoryFilter() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [data, setData] = useState([]) 
-  const [catfilters, setcatFilters] = useState({});
+  const [catfilters, setcatFilters] = useState({
+    category: [],
+    name: [], 
+  });
 
   const handleInputChange = (event) => {
-    setcatFilters(filters => ({ ...filters, [event.target.name]: event.target.value }));
+    if (event.target.checked) {
+      if (event.target.name === 'name' ) {
+        const newFilters = { ...catfilters };
+        newFilters.name.push(event.target.value); // Add name to array
+        setcatFilters(newFilters);
+      }else if(event.target.name === 'category') {
+        const newFilters = { ...catfilters };
+        newFilters.category.push(event.target.value); // Add name to array
+        setcatFilters(newFilters);
+      }else{  
+        setcatFilters(filters => ({ ...filters, [event.target.name]: event.target.value }));
+      }
+    } else {
+      if (event.target.name === 'name') {
+        const newFilters = { ...catfilters };
+        newFilters.name = newFilters.name.filter((name) => name !== event.target.value); // Remove name from array
+        setcatFilters(newFilters);
+      }else if(event.target.name === 'category') {
+        const newFilters = { ...catfilters };
+        newFilters.category = newFilters.category.filter((category) => category !== event.target.value); // Remove name from array
+        setcatFilters(newFilters);
+      }else {   
+        setcatFilters((filters) => { // Remove the filter when the checkbox is unchecked
+          const newFilters = { ...filters }; // Create a new object
+          delete newFilters[event.target.name]; // Remove the filter
+          return newFilters; // Return the new object
+        }); 
+      }
+    }
   };
 
   useEffect(() => {
@@ -100,7 +131,9 @@ function CategoryFilter() {
     const fetchData = async () => {
       try {
         const url = new URL('https://outfitted-backend.vercel.app/productlist/');
-        url.search = new URLSearchParams(catfilters);
+        const searchParams = new URLSearchParams(catfilters);
+        searchParams.set('name', catfilters.name.join(',')); // Join names with comma
+        url.search = searchParams.toString();
         console.log('url',url.toString())
         const response = await fetch(url.toString());
         const data = await response.json();
@@ -168,7 +201,7 @@ function CategoryFilter() {
                         <div key={category.name} className="flex items-center" >
                           <input
                             // id={`filter-mobile-${section.id}-${optionIdx}`}
-                            // name={`${section.id}[]`}
+                            name={`${category.id}`}
                             defaultValue={category.name}
                             type="checkbox"
                             defaultChecked={category.checked}
@@ -336,7 +369,7 @@ function CategoryFilter() {
                     <div key={category.name} className="flex items-center" >
                       <input
                         // id={`filter-mobile-${section.id}-${optionIdx}`}
-                        // name={`${section.id}[]`}
+                        name={`${category.id}`}
                         defaultValue={category.name}
                         type="checkbox"
                         defaultChecked={category.checked}
