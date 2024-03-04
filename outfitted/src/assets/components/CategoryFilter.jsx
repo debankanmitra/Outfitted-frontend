@@ -26,6 +26,7 @@ const subCategories = [
 const filters = [
   {
     id: 'name',
+    type: 'checkbox',
     name: 'Brand',
     options: [
       { value: 'BIBA', label: 'BIBA', checked: false },
@@ -37,6 +38,7 @@ const filters = [
   },
   {
     id: 'price',
+    type: 'radio',
     name: 'Price',
     options: [
       { value: '0,15', label: '$0 - $15', checked: false },
@@ -47,6 +49,7 @@ const filters = [
   },
   {
     id: 'discount',
+    type: 'radio',
     name: 'Discount Range',
     options: [
       { value: 10, label: '10% and above', checked: false },
@@ -60,6 +63,7 @@ const filters = [
   },
   {
     id: 'ratings',
+    type: 'radio',
     name: 'Ratings',
     options: [
       { value: 1, label: '1⭐ and above', checked: false },
@@ -70,6 +74,7 @@ const filters = [
   },
   {
     id: 'retailer',
+    type: 'checkbox',
     name: 'Retailer',
     options: [
       { value: 'Bibi Fabrics', label: 'Bibi Fabrics', checked: false },
@@ -258,7 +263,7 @@ function CategoryFilter() {
                                       id={`filter-mobile-${section.id}-${optionIdx}`}
                                       name={`${section.id}`}
                                       defaultValue={option.value}
-                                      type="checkbox"
+                                      type={section.type}
                                       defaultChecked={option.checked}
                                       onChange={handleInputChange}
                                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
@@ -427,7 +432,7 @@ function CategoryFilter() {
                                   id={`filter-${section.id}-${optionIdx}`}
                                   name={`${section.id}`}
                                   defaultValue={option.value}
-                                  type="checkbox"
+                                  type={section.type}
                                   defaultChecked={option.checked}
                                   onChange={handleInputChange}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
