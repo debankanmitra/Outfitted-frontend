@@ -65,7 +65,7 @@ function Flyout() {
   };
 
   const handleCloseModal = () => {
-    console.log(Cookies.get('token'))
+    console.log("cookies token",Cookies.get('token'))
     setShowModal(false);
   };
 

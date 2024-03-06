@@ -3,9 +3,41 @@ import { useParams } from 'react-router-dom' // Import useParams for dynamic rou
 import ReviewSection from '../assets/components/Reviews'
 
 const ProductDetails = () => {
+  const [favourite, setFavourite] = useState(false)
   const [showReviews, setReviews] = useState(false)
   const [product, setProduct] = useState(null)
   const { productId } = useParams() // Extract product ID from URL
+
+  if (!localStorage.getItem('wishlist')) {
+    localStorage.setItem('wishlist', JSON.stringify([])) // Initialize the wishlist in local storage
+  }
+
+  const toggleFavourite = () => { //TODO: Do a patch request in user model to update the wishlist and also save it to the local storage after fetch from server
+   const prodObj = { id: product.productid, name: product.name, price: product.price, imageSrc: product.Images }
+    setFavourite(!favourite) // It just helps to render the component to update the red heart icon
+    if (localStorage.getItem('wishlist')) { // if wishlist array already present 
+      const retrievedArray = JSON.parse(localStorage.getItem('wishlist'))
+      if (hasID(productId)) {
+        retrievedArray.splice(retrievedArray.indexOf(prodObj), 1) // Remove the product id from the array
+        localStorage.setItem('wishlist', JSON.stringify(retrievedArray)) // Update the local storage
+      } else {
+        retrievedArray.push(prodObj) // if id is new Add the product id to the array
+        localStorage.setItem('wishlist', JSON.stringify(retrievedArray)) // Update the local storage
+      }
+    }else{ // if wishlist array not present
+      localStorage.setItem('wishlist', JSON.stringify([prodObj])) // Add the first product id to the array
+    }
+  }
+
+  function hasID(id) {
+    const retrievedArray = JSON.parse(localStorage.getItem('wishlist'))
+     for (const obj of retrievedArray) {
+    if (obj.id === id) {
+      return true; // Name found, exit the loop
+    }
+  }
+  return false; // Name not found
+  }
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -24,15 +56,15 @@ const ProductDetails = () => {
     fetchProductDetails()
   }, [productId]) // Re-fetch data when productId changes
 
-  const containerRef = useRef(null);
+  const containerRef = useRef(null)
   const scrollToBottom = () => {
-    setReviews(true); // Fetch the data , implement fetching from server
-  };
-  
+    setReviews(true) // Fetch the data , implement fetching from server
+  }
+
   useEffect(() => {
     // Scroll to the bottom only when reviews are loaded
-      containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  }, [showReviews]); // Run the effect when reviews change
+    containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  }, [showReviews]) // Run the effect when reviews change
   return (
     <section className="py-10 font-poppins">
       <div className="max-w-6xl px-4 mx-auto">
@@ -168,7 +200,12 @@ const ProductDetails = () => {
                     >
                       {product.buys} Ratings
                     </a>
-                    <span className="text-md mx-4 font-semibold text-purple-900 hover:underline" onClick={scrollToBottom}>See all Reviews</span>
+                    <span
+                      className="text-md mx-4 font-semibold text-purple-900 hover:underline"
+                      onClick={scrollToBottom}
+                    >
+                      See all Reviews
+                    </span>
                   </div>
 
                   <p className="inline-block text-2xl font-semibold text-gray-70 ">
@@ -270,16 +307,18 @@ const ProductDetails = () => {
                     </div>
                   </div>
                   <div className="mb-4 lg:mb-0">
-                    <button className="flex items-center justify-center w-full h-10 p-2 mr-4 text-gray-700 border border-gray-300 lg:w-11 hover:text-gray-50  hover:bg-blue-600 hover:border-blue-600">
+                    <button className="flex items-center justify-center w-full h-10 p-2 mr-4 lg:w-11">
                       <svg
+                        width="55"
+                        height="55"
+                        viewBox="0 0 15 15"
                         xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        className=" bi bi-heart"
-                        viewBox="0 0 16 16"
+                        onClick={toggleFavourite}
                       >
-                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                        <path
+                          fill={hasID(productId) ? '#e74c3c' : 'grey'} className='hover:fill-[#e74c3c]'
+                          d="M4.03553 1C1.80677 1 0 2.80677 0 5.03553C0 6.10582 0.42517 7.13228 1.18198 7.88909L7.14645 13.8536C7.34171 14.0488 7.65829 14.0488 7.85355 13.8536L13.818 7.88909C14.5748 7.13228 15 6.10582 15 5.03553C15 2.80677 13.1932 1 10.9645 1C9.89418 1 8.86772 1.42517 8.11091 2.18198L7.5 2.79289L6.88909 2.18198C6.13228 1.42517 5.10582 1 4.03553 1Z"
+                        />
                       </svg>
                     </button>
                   </div>
@@ -305,9 +344,7 @@ const ProductDetails = () => {
           <p>Loading product details...</p>
         )}
       </div>
-      <div ref={containerRef}>
-      {showReviews && <ReviewSection />}
-      </div>
+      <div ref={containerRef}>{showReviews && <ReviewSection />}</div>
     </section>
   )
 }
